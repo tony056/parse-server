@@ -21,7 +21,7 @@ var triggers = require('./triggers');
 // should get updated with data.
 // RestWrite will handle objectId, createdAt, and updatedAt for
 // everything. It also knows to use triggers and special modifications
-// for the _User class.
+// for the users class.
 function RestWrite(config, auth, className, query, data, originalData) {
   this.config = config;
   this.auth = auth;
@@ -150,7 +150,7 @@ RestWrite.prototype.runBeforeTrigger = function() {
 // Does nothing if this isn't a user object.
 // Returns a promise for when we're done if it can't finish this tick.
 RestWrite.prototype.validateAuthData = function() {
-  if (this.className !== '_User') {
+  if (this.className !== 'users') {
     return;
   }
 
@@ -338,7 +338,7 @@ RestWrite.prototype.handleOAuthAuthData = function(provider) {
 
 // The non-third-party parts of User transformation
 RestWrite.prototype.transformUser = function() {
-  if (this.className !== '_User') {
+  if (this.className !== 'users') {
     return;
   }
 
@@ -354,7 +354,7 @@ RestWrite.prototype.transformUser = function() {
         sessionToken: token,
         user: {
           __type: 'Pointer',
-          className: '_User',
+          className: 'users',
           objectId: this.objectId()
         },
         createdWith: {
@@ -437,7 +437,7 @@ RestWrite.prototype.handleFollowup = function() {
     var sessionQuery = {
       user: {
           __type: 'Pointer',
-          className: '_User',
+          className: 'users',
           objectId: this.objectId()
         }
     };
@@ -491,7 +491,7 @@ RestWrite.prototype.handleSession = function() {
       sessionToken: token,
       user: {
         __type: 'Pointer',
-        className: '_User',
+        className: 'users',
         objectId: this.auth.user.id
       },
       createdWith: {
@@ -699,7 +699,7 @@ RestWrite.prototype.runDatabaseOperation = function() {
     return;
   }
 
-  if (this.className === '_User' &&
+  if (this.className === 'users' &&
       this.query &&
       !this.auth.couldUpdateUserId(this.query.objectId)) {
     throw new Parse.Error(Parse.Error.SESSION_MISSING,
@@ -724,8 +724,8 @@ RestWrite.prototype.runDatabaseOperation = function() {
         this.response.updatedAt = this.updatedAt;
       });
   } else {
-    // Set the default ACL for the new _User
-    if (!this.data.ACL && this.className === '_User') {
+    // Set the default ACL for the new users
+    if (!this.data.ACL && this.className === 'users') {
       var ACL = {};
       ACL[this.data.objectId] = { read: true, write: true };
       ACL['*'] = { read: true, write: false };
@@ -772,7 +772,7 @@ RestWrite.prototype.runAfterTrigger = function() {
 
 // A helper to figure out what location this operation happens at.
 RestWrite.prototype.location = function() {
-  var middle = (this.className === '_User' ? '/users/' :
+  var middle = (this.className === 'users' ? '/users/' :
                 '/classes/' + this.className + '/');
   return this.config.mount + middle + this.data.objectId;
 };

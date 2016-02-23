@@ -1585,7 +1585,7 @@ describe('Parse.Object testing', () => {
       className: "User"
     });
 
-    equal(User1.className, "_User",
+    equal(User1.className, "users",
           "className is rewritten by default");
 
     Parse.User.allowCustomUserClass(true);

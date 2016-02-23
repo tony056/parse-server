@@ -33,7 +33,7 @@ function RestQuery(config, auth, className, restWhere = {}, restOptions = {}) {
         '$and': [this.restWhere, {
            'user': {
               __type: 'Pointer',
-              className: '_User',
+              className: 'users',
               objectId: this.auth.user.id
            }
         }]
@@ -318,7 +318,7 @@ RestQuery.prototype.replaceDontSelect = function() {
 RestQuery.prototype.runFind = function() {
   return this.config.database.find(
     this.className, this.restWhere, this.findOptions).then((results) => {
-    if (this.className == '_User') {
+    if (this.className == 'users') {
       for (var result of results) {
         delete result.password;
       }
@@ -420,7 +420,7 @@ function includePath(config, auth, response, path) {
       obj.__type = 'Object';
       obj.className = className;
 
-      if(className == "_User"){
+      if(className == "users"){
         delete obj.sessionToken;
       }
 

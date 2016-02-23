@@ -63,7 +63,7 @@ var getAuthForSessionToken = function(config, sessionToken) {
     }
     var obj = results[0]['user'];
     delete obj.password;
-    obj['className'] = '_User';
+    obj['className'] = 'users';
     obj['sessionToken'] = sessionToken;
     var userObject = Parse.Object.fromJSON(obj);
     cache.setUser(sessionToken, userObject);
@@ -91,7 +91,7 @@ Auth.prototype._loadRoles = function() {
   var restWhere = {
     'users': {
       __type: 'Pointer',
-      className: '_User',
+      className: 'users',
       objectId: this.user.id
     }
   };

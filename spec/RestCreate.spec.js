@@ -47,7 +47,7 @@ describe('rest create', () => {
       password: 'zxcv',
       foo: 'bar',
     };
-    rest.create(config, auth.nobody(config), '_User', user)
+    rest.create(config, auth.nobody(config), 'users', user)
       .then((r) => {
         expect(Object.keys(r.response).length).toEqual(3);
         expect(typeof r.response.objectId).toEqual('string');
@@ -73,24 +73,24 @@ describe('rest create', () => {
       }
     };
     var username1;
-    rest.create(config, auth.nobody(config), '_User', data1)
+    rest.create(config, auth.nobody(config), 'users', data1)
       .then((r) => {
         expect(typeof r.response.objectId).toEqual('string');
         expect(typeof r.response.createdAt).toEqual('string');
         expect(typeof r.response.sessionToken).toEqual('string');
-        return rest.create(config, auth.nobody(config), '_User', data1);
+        return rest.create(config, auth.nobody(config), 'users', data1);
       }).then((r) => {
         expect(typeof r.response.objectId).toEqual('string');
         expect(typeof r.response.createdAt).toEqual('string');
         expect(typeof r.response.username).toEqual('string');
         expect(typeof r.response.updatedAt).toEqual('string');
         username1 = r.response.username;
-        return rest.create(config, auth.nobody(config), '_User', data2);
+        return rest.create(config, auth.nobody(config), 'users', data2);
       }).then((r) => {
         expect(typeof r.response.objectId).toEqual('string');
         expect(typeof r.response.createdAt).toEqual('string');
         expect(typeof r.response.sessionToken).toEqual('string');
-        return rest.create(config, auth.nobody(config), '_User', data2);
+        return rest.create(config, auth.nobody(config), 'users', data2);
       }).then((r) => {
         expect(typeof r.response.objectId).toEqual('string');
         expect(typeof r.response.createdAt).toEqual('string');
@@ -110,7 +110,7 @@ describe('rest create', () => {
         }
       }
     };
-    rest.create(NoAnnonConfig, auth.nobody(NoAnnonConfig), '_User', data1).then(() => {
+    rest.create(NoAnnonConfig, auth.nobody(NoAnnonConfig), 'users', data1).then(() => {
       fail("Should throw an error");
       done();
     }, (err) => {
@@ -129,12 +129,12 @@ describe('rest create', () => {
         }
       }
     };
-    rest.create(config, auth.nobody(config), '_User', data)
+    rest.create(config, auth.nobody(config), 'users', data)
       .then((r) => {
         expect(typeof r.response.objectId).toEqual('string');
         expect(typeof r.response.createdAt).toEqual('string');
         expect(typeof r.response.sessionToken).toEqual('string');
-        return rest.create(config, auth.nobody(config), '_User', data);
+        return rest.create(config, auth.nobody(config), 'users', data);
       }).then((r) => {
         expect(typeof r.response.objectId).toEqual('string');
         expect(typeof r.response.createdAt).toEqual('string');

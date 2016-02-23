@@ -53,7 +53,7 @@ describe('rest query', () => {
       },
       fromUser: {
         __type: 'Pointer',
-        className: '_User',
+        className: 'users',
         objectId: ''
       }
     };
@@ -73,7 +73,7 @@ describe('rest query', () => {
     rest.create(config, nobody, 'TestPhoto', photo
     ).then((p) => {
       photo = p;
-      return rest.create(config, nobody, '_User', user);
+      return rest.create(config, nobody, 'users', user);
     }).then((u) => {
       user = u.response;
       activity.photo.objectId = photo.objectId;

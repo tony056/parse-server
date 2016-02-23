@@ -6,7 +6,7 @@ var dummySchema = {
     data: {},
     getExpectedType: function(className, key) {
       if (key == 'userPointer') {
-        return '*_User';
+        return '*users';
       } else if (key == 'picture') {
         return 'file';
       } else if (key == 'location') {
@@ -113,11 +113,11 @@ describe('untransformObject', () => {
   });
 
   it('pointer', (done) => {
-    var input = {_p_userPointer: '_User$123'};
+    var input = {_p_userPointer: 'users$123'};
     var output = transform.untransformObject(dummySchema, null, input);
     expect(typeof output.userPointer).toEqual('object');
     expect(output.userPointer).toEqual(
-      {__type: 'Pointer', className: '_User', objectId: '123'}
+      {__type: 'Pointer', className: 'users', objectId: '123'}
     );
     done();
   });
@@ -152,7 +152,7 @@ describe('untransformObject', () => {
 describe('transformKey', () => {
   it('throws out _password', (done) => {
     try {
-      transform.transformKey(dummySchema, '_User', '_password');
+      transform.transformKey(dummySchema, 'users', '_password');
       fail('should have thrown');
     } catch (e) {
       done();
@@ -174,11 +174,11 @@ describe('transform schema key changes', () => {
 
   it('changes existing pointer keys', (done) => {
     var input = {
-      userPointer: {__type: 'Pointer', className: '_User', objectId: 'qwerty'}
+      userPointer: {__type: 'Pointer', className: 'users', objectId: 'qwerty'}
     };
     var output = transform.transformCreate(dummySchema, null, input);
     expect(typeof output._p_userPointer).toEqual('string');
-    expect(output._p_userPointer).toEqual('_User$qwerty');
+    expect(output._p_userPointer).toEqual('users$qwerty');
     done();
   });
 

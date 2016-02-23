@@ -65,7 +65,7 @@ export class ClassesRouter extends PromiseRouter {
           throw new Parse.Error(Parse.Error.OBJECT_NOT_FOUND, 'Object not found.');
         }
         
-        if (req.params.className === "_User") {
+        if (req.params.className === "users") {
           
           delete response.results[0].sessionToken;
           

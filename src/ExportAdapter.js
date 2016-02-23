@@ -117,7 +117,7 @@ ExportAdapter.prototype.untransformObject = function(
   schema, isMaster, aclGroup, className, mongoObject) {
   var object = transform.untransformObject(schema, className, mongoObject);
 
-  if (className !== '_User') {
+  if (className !== 'users') {
     return object;
   }
 

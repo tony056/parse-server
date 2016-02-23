@@ -25,15 +25,15 @@ var defaultColumns = {
     "updatedAt": {type:'Date'},
     "ACL":       {type:'ACL'},
   },
-  // The additional default columns for the _User collection (in addition to DefaultCols)
-  _User: {
+  // The additional default columns for the users collection (in addition to DefaultCols)
+  users: {
     "username":      {type:'String'},
     "password":      {type:'String'},
     "authData":      {type:'Object'},
     "email":         {type:'String'},
     "emailVerified": {type:'Boolean'},
   },
-  // The additional default columns for the _User collection (in addition to DefaultCols)
+  // The additional default columns for the users collection (in addition to DefaultCols)
   _Installation: {
     "installationId":   {type:'String'},
     "deviceToken":      {type:'String'},
@@ -45,16 +45,16 @@ var defaultColumns = {
     "localeIdentifier": {type:'String'},
     "badge":            {type:'Number'}
   },
-  // The additional default columns for the _User collection (in addition to DefaultCols)
+  // The additional default columns for the users collection (in addition to DefaultCols)
   _Role: {
     "name":  {type:'String'},
-    "users": {type:'Relation',className:'_User'},
+    "users": {type:'Relation',className:'users'},
     "roles": {type:'Relation',className:'_Role'}
   },
-  // The additional default columns for the _User collection (in addition to DefaultCols)
+  // The additional default columns for the users collection (in addition to DefaultCols)
   _Session: {
     "restricted":     {type:'Boolean'},
-    "user":           {type:'Pointer', className:'_User'},
+    "user":           {type:'Pointer', className:'users'},
     "installationId": {type:'String'},
     "sessionToken":   {type:'String'},
     "expiresAt":      {type:'Date'},
@@ -77,14 +77,14 @@ var requiredColumns = {
 }
 
 // Valid classes must:
-// Be one of _User, _Installation, _Role, _Session OR
+// Be one of users, _Installation, _Role, _Session OR
 // Be a join table OR
 // Include only alpha-numeric and underscores, and not start with an underscore or number
 var joinClassRegex = /^_Join:[A-Za-z0-9_]+:[A-Za-z0-9_]+/;
 var classAndFieldRegex = /^[A-Za-z][A-Za-z0-9_]*$/;
 function classNameIsValid(className) {
   return (
-    className === '_User' ||
+    className === 'users' ||
     className === '_Installation' ||
     className === '_Session' ||
     className === '_SCHEMA' || //TODO: remove this, as _SCHEMA is not a valid class name for storing Parse Objects.
