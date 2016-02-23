@@ -12,29 +12,29 @@ import { newToken } from '../cryptoUtils';
 
 export class UsersRouter extends ClassesRouter {
   handleFind(req) {
-    req.params.className = '_User';
+    req.params.className = 'users';
     return super.handleFind(req);
   }
 
   handleGet(req) {
-    req.params.className = '_User';
+    req.params.className = 'users';
     return super.handleGet(req);
   }
 
   handleCreate(req) {
     let data = deepcopy(req.body);
     req.body = data;
-    req.params.className = '_User';
+    req.params.className = 'users';
     return super.handleCreate(req);
   }
 
   handleUpdate(req) {
-    req.params.className = '_User';
+    req.params.className = 'users';
     return super.handleUpdate(req);
   }
 
   handleDelete(req) {
-    req.params.className = '_User';
+    req.params.className = 'users';
     return super.handleDelete(req);
   }
 
@@ -72,7 +72,7 @@ export class UsersRouter extends ClassesRouter {
     }
 
     let user;
-    return req.database.find('_User', { username: req.body.username })
+    return req.database.find('users', { username: req.body.username })
       .then((results) => {
         if (!results.length) {
           throw new Parse.Error(Parse.Error.OBJECT_NOT_FOUND, 'Invalid username/password.');
@@ -97,7 +97,7 @@ export class UsersRouter extends ClassesRouter {
           sessionToken: token,
           user: {
             __type: 'Pointer',
-            className: '_User',
+            className: 'users',
             objectId: user.objectId
           },
           createdWith: {
